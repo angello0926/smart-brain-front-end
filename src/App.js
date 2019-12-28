@@ -185,8 +185,8 @@ class App extends Component {
 
         { route === 'home'
           ? <div>
-              <Logo />
               <Rank
+                isSignedIn={isSignedIn}
                 name={user.name}
                 entries={user.entries}
               />

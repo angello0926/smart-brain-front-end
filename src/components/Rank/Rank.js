@@ -33,19 +33,23 @@ class Rank extends React.Component{
   
   
   render(){
-    return (
-      <div>
-        <div className='white f3'>
-          {`${this.props.name}, your current entry count is...`}
+    if (this.props.isSignedIn) {
+      return (
+        <div>
+          <div className='white f3'>
+            {`${this.props.name}, your current entry count is...`}
+          </div>
+          <div className='white f1'>
+            {this.props.entries}
+          </div>
+          <div className='white f1'>
+            <h1>{this.state.emoji}</h1>
+          </div>
         </div>
-        <div className='white f1'>
-          {this.props.entries}
-        </div>
-        <div className='white f1'>
-          <h1>{this.state.emoji}</h1>
-        </div>
-      </div>
-    );
+      );
+    } else {
+      return null;
+    }
   }
 } 
 
