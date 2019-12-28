@@ -9,7 +9,7 @@ const Navigation = ({ onRouteChange, isSignedIn, toggleModal }) => {
           <Container>
             <Row className="w-100 items-center">
               <Col sm={3}>
-                <a class="mr-auto navbar-brand" href="#" title="Home">Smart Brain</a>
+                <a className="mr-auto navbar-brand" href="#" title="Home">Smart Brain</a>
               </Col>
               <Col sm={9}>
                 <ProfileIcon toggleModal={toggleModal} onRouteChange={onRouteChange}/>
@@ -24,7 +24,7 @@ const Navigation = ({ onRouteChange, isSignedIn, toggleModal }) => {
           <Container>
             <Row className="w-100 items-center">
               <Col sm={3}>
-                <a class="mr-auto navbar-brand" href="#" title="Home">Smart Brain</a>
+                <a className="mr-auto navbar-brand" href="#" title="Home">Smart Brain</a>
               </Col>
               <Col sm={9} className="tr">
                 <a className="nav-link f5 lh-copy dib pointer" onClick={() => onRouteChange('signin')} >Sign In</a>
