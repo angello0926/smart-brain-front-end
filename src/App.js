@@ -47,6 +47,40 @@ class App extends Component {
     this.state = initialState;
   }
 
+  componentDidMount() {
+    const token = sessionStorage.getItem('token')   
+    if (token){
+      fetch('http://localhost:3000/signin', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+      }
+      })
+      .then(resp => resp.json())
+      .then(data => {
+        console.log (data);
+        this.setState({isSignedIn: true})
+        if(data && data.id){
+          fetch(`http://localhost:3000/profile/${data.id}`, {
+            method: 'get',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': sessionStorage.getItem('token')
+            }
+          })
+          .then(resp => resp.json())
+          .then(user => {
+              this.loadUser(user);
+              this.onRouteChange('home');
+            })
+            .catch(console.log)
+        }
+      })
+      .catch(err => console.log(err));
+    }
+  }
+
   loadUser = (data) => {
     this.setState({user: {
       id: data.id,
@@ -82,7 +116,9 @@ class App extends Component {
     this.setState({imageUrl: this.state.input});
       fetch('http://localhost:3000/imageurl', {
         method: 'post',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': sessionStorage.getItem('token')},
         body: JSON.stringify({
           input: this.state.input
         })
@@ -92,7 +128,10 @@ class App extends Component {
         if (response) {
           fetch('http://localhost:3000/image', {
             method: 'put',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': sessionStorage.getItem('token')
+            },
             body: JSON.stringify({
               id: this.state.user.id
             })
@@ -112,6 +151,7 @@ class App extends Component {
   onRouteChange = (route) => {
     console.log(this.state, route);
     if (route === 'signout') {
+      sessionStorage.removeItem('token');
       return this.setState(initialState)
     } else if (route === 'home') {
       this.setState({isSignedIn: true})
